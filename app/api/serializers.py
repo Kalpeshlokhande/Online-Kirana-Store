@@ -6,7 +6,8 @@ from app.cart.models import CartItem
 from app.orders.models import Order, OrderItem
 
 class RegisterSerializer(serializers.ModelSerializer):
-    phone = serializers.CharField()
+    phone = serializers.CharField(write_only=True)
+
     class Meta:
         model = User
         fields = ['username', 'email', 'password', 'phone']
@@ -18,7 +19,17 @@ class RegisterSerializer(serializers.ModelSerializer):
         UserProfile.objects.create(user=user, phone=phone)
         return user
 
+    def to_representation(self, instance):
+        return {
+            'id': instance.id,
+            'username': instance.username,
+            'email': instance.email,
+        }
+        s.create(user=user, phone=phone)
+        return user
+
 class UserProfileSerializer(serializers.ModelSerializer):
+    phone = serializers.CharField(required=False) 
     class Meta:
         model = UserProfile
         fields = ['phone', 'address']
