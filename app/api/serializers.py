@@ -5,7 +5,6 @@ from app.products.models import Category, Product
 from app.cart.models import CartItem
 from app.orders.models import Order, OrderItem
 
-# USERS
 class RegisterSerializer(serializers.ModelSerializer):
     phone = serializers.CharField()
     class Meta:
@@ -30,7 +29,6 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'username', 'email', 'profile']
 
-# PRODUCTS
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
@@ -42,7 +40,6 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = ['id', 'name', 'category', 'price', 'description', 'image', 'stock_quantity']
 
-# CART
 class CartItemSerializer(serializers.ModelSerializer):
     product = ProductSerializer()
     class Meta:
@@ -53,7 +50,6 @@ class AddCartItemSerializer(serializers.Serializer):
     product_id = serializers.IntegerField()
     quantity = serializers.IntegerField()
 
-# ORDERS
 class OrderItemSerializer(serializers.ModelSerializer):
     product = ProductSerializer()
     class Meta:
@@ -66,4 +62,3 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = ['id', 'address', 'status', 'created_at', 'items']
 
-        
