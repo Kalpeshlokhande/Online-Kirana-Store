@@ -1,20 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login</title>
-</head>
+<html>
+<head><title>Admin Login</title></head>
 <body>
-    <h2>Admin Login</h2>
-    <form method="post">
-        {% csrf_token %}
-        <input type="text" name="username" placeholder="Username" required><br><br>
-        <input type="password" name="password" placeholder="Password"><br><br>
-        <button type="submit">Login</button>
-    </form>
-    {% for message in messages %}
-    <p style="color: red;">{{ message }}</p>
-    {% endfor %}
+<h2>Admin Login</h2>
+<form method="post">
+    <!-- {% csrf_token %}
+    {{ form.as_p }} -->
+    <!-- <button type="submit">Login</button> -->
+</form>
+<!-- {% for message in messages %}
+    <p style="color:red;">{{ message }}</p>
+{% endfor %} -->
 </body>
 </html>

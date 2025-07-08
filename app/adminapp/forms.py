@@ -1,12 +1,11 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm
-from app.products.models import Product
+from app.products.models import Product, Category
 
-class AdminLoginForm(AuthenticationForm):
-    username=forms.CharField(label="Username",max_length=150)
-    password=forms.CharField(label="Password",widget=forms.PasswordInput)
+class AdminLoginForm(forms.Form):
+    username = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput)
 
 class ProductForm(forms.ModelForm):
     class Meta:
-        model=Product
-        fields =['name','catrgoey','price','description','image','stock_quantity']
+        model = Product
+        fields = ['name', 'category', 'price', 'stock_quantity', 'description', 'image']

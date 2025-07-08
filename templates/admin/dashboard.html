@@ -1,27 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-</head>
+<html>
+<head><title>Admin Dashboard</title></head>
 <body>
-    <h2>Welcome, {{request.user.username}}</h2>
-    <ul>
-        <li><a href="">Add New Item</a></li>
-        <li><a href="">View Orders</a></li>
-        <li><a href="">Logout</a></li>
-    </ul>
-    <h3>Items</h3>
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Price</th>
-            <th>Stock</th>
-            <th>Image</th>
-            <th>Actions</th>
-        </tr>
-    </table>
+<h2>Welcome, {{ request.user.username }} (Admin)</h2>
+<ul>
+    <li><a href="{% url 'add_item' %}">Add New Item</a></li>
+    <li><a href="{% url 'view_orders' %}">View Orders</a></li>
+    <li><a href="{% url 'admin_logout' %}">Logout</a></li>
+</ul>
+<h3>Items</h3>
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Price</th>
+        <th>Stock</th>
+        <th>Image</th>
+        <th>Actions</th>
+    </tr>
+    <!-- {% for product in products %}
+    <tr>
+        <td>{{ product.name }}</td>
+        <td>{{ product.category.name }}</td>
+        <td>{{ product.price }}</td>
+        <td>{{ product.stock_quantity }}</td>
+        <td>
+            {% if product.image %}
+                <img src="{{ product.image.url }}" width="50">
+            {% endif %}
+        </td> -->
+        <!-- <td>
+            <a href="{% url 'update_item' product.id %}">Edit</a>
+        </td>
+    </tr>
+    {% endfor %} -->
+</table>
 </body>
 </html>

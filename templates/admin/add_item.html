@@ -1,29 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Item</title>
-</head>
+<html>
+<head><title>Add Item</title></head>
 <body>
-    <h2>Add New Item</h2>
-    <form action="">
-        <label >Name:</label><br>
-        <input type="text" name="name" required><br><br>
-        <label >Category:</label><br>
-        <select name="category" >
-
-        </select><br><br>
-        <label >Price:</label><br>
-        <input type="number" name="price" step="0.01" required ><br><br>
-        <label >Stock Quantity:</label><br>
-        <input type="number" name="stock_qunatity" required><br><br>
-        <label >Description :</label>
-        <textarea name="description"></textarea><br><br>
-        <label >Image:</label>
-        <input type="file" name="image" ><br><br>
-        <button type="submit"> Add Item</button>
-    </form>
-    <a href="">Back to Dashboard</a>
+<h2>Add New Item</h2>
+<!-- <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Item</button>
+</form>
+<a href="{% url 'admin_dashboard' %}">Back to Dashboard</a> -->
 </body>
 </html>
