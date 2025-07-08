@@ -9,12 +9,12 @@
     <h2>Admin Login</h2>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p}}
+        <input type="text" name="username" placeholder="Username" required><br><br>
+        <input type="password" name="password" placeholder="Password"><br><br>
         <button type="submit">Login</button>
-
     </form>
-    {% if form.non_field_errors %}
-    <p style="color:red;">{{form.non_field_errors}}</p>
-    {% endif %}
+    {% for message in messages %}
+    <p style="color: red;">{{ message }}</p>
+    {% endfor %}
 </body>
 </html>
