@@ -10,6 +10,6 @@ class ProductListView(View):
             return redirect('admin_login')
         
         products = Product.objects.all()
-        return render(request,self.template_name,{'products':products})
+        return render(request, self.template_name, {'products': products})
     
-
+    
