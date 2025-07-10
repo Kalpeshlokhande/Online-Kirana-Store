@@ -1,7 +1,8 @@
 from django.shortcuts import redirect
 from django.views import View
+from django.contrib.auth import logout
 
 class AdminLogoutView(View):
     def get(self, request):
-        request.session.flush()
-        return redirect('admin_login')
+        logout(request)
+        return redirect('admin_panel:login')

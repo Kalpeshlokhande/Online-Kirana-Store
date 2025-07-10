@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from config import settings
+from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
@@ -26,6 +26,9 @@ urlpatterns = [
     path('api/', include('apps.cart.urls')),
     path('api/', include('apps.orders.urls')),
     path('api/', include('apps.addresses.urls')),
-    path('admin-panel/', include('apps.admin_panel.urls')),
-]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
-  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('admin-panel/', include('apps.admin_panel.urls', namespace='admin_panel')),
+]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,15 +1,21 @@
 from django.urls import path
-from apps.admin_panel.views import AdminLoginView, AdminLogoutView, AdminDashboardView
-from apps.admin_panel.views import ProductListView, AddProductView, EditProductView
-from apps.admin_panel.views import OrderListView, OrderDetailView
+from apps.admin_panel.views.AddProductView import  ProductAddView
+from apps.admin_panel.views.AdminLoginView import AdminLoginView
+from apps.admin_panel.views.AdminLogoutView import AdminLogoutView
+from apps.admin_panel.views.EditProductView import ProductEditView
+from apps.admin_panel.views.OrderDetailView import OrderDetailView
+from apps.admin_panel.views.OrderListView import OrderListView
+from apps.admin_panel.views.ProductListView import ProductListView 
+
+app_name = 'apps.admin_panel'
 
 urlpatterns = [
-    path('login/', AdminLoginView.as_view(), name='admin_login'),
-    path('logout/', AdminLogoutView.as_view(), name='admin_logout'),
-    path('dashboard/', AdminDashboardView.as_view(), name='admin_dashboard'),
-    path('products/', ProductListView.as_view(), name='admin_products'),
-    path('products/add/', AddProductView.as_view(), name='admin_add_product'),
-    path('products/edit/<int:product_id>/', EditProductView.as_view(), name='admin_edit_product'),
-    path('orders/', OrderListView.as_view(), name='admin_orders'),
-    path('orders/<int:order_id>/', OrderDetailView.as_view(), name='admin_order_detail'),
+    path('login/', AdminLoginView.as_view(), name='login'),
+    path('logout/', AdminLogoutView.as_view(), name='logout'),
+    path('', ProductListView.as_view(), name='dashboard'),  
+    path('products/', ProductListView.as_view(), name='product_list'),
+    path('products/add/', ProductAddView.as_view(), name='product_add'),
+    path('products/<int:pk>/edit/', ProductEditView.as_view(), name='product_edit'),
+    path('orders/', OrderListView.as_view(), name='order_list'),
+    path('orders/<int:pk>/', OrderDetailView.as_view(), name='order_detail'),
 ]

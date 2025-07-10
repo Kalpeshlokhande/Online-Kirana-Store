@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, permissions
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from apps.users.models import User
 from apps.users.serializers.user import (
     UserRegistrationSerializer, UserLoginSerializer, UserProfileSerializer
@@ -24,7 +24,7 @@ class LoginView(APIView):
         if serializer.is_valid():
             email = serializer.validated_data['email']
             password = serializer.validated_data['password']
-            user = authenticate(username=email, password=password)
+            user = authenticate(request, email=email, password=password)
             if user:
                 refresh = RefreshToken.for_user(user)
                 return Response({

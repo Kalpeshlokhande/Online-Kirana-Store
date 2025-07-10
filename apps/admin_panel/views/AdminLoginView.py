@@ -1,27 +1,28 @@
-from django.contrib import messages
-from django.shortcuts import redirect,render
-from django.views import View
+from django.views.generic import FormView
 from django.contrib.auth import authenticate, login
-from rest_framework_simplejwt.tokens import RefreshToken
+from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
+from apps.admin_panel.forms.AdminLoginForm import AdminLoginForm
 
-class AdminLoginView(View):
+class AdminLoginView(FormView):
     template_name = 'admin_panel/login.html'
+    form_class = AdminLoginForm
+    success_url = reverse_lazy('admin_panel:dashboard')
 
-    def get(self, request):
+    def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated and request.user.is_admin:
-            return redirect('admin_dashboard')
-        return render(request, self.template_name)
+            return redirect('admin_panel:dashboard')
+        return super().dispatch(request, *args, **kwargs)
 
-    def post(self, request):
-        email = request.POST['email']
-        password = request.POST['password']
-        user = authenticate(username=email, password=password)
-        
-        if user is not None and user.is_admin:
-            login(request, user)
-            refresh = RefreshToken.for_user(user)
-            request.session['admin_access_token'] = str(refresh.access_token)
-            return redirect('admin_dashboard')
-        
-        messages.error(request, 'Invalid credentials or not an admin')
-        return render(request, self.template_name)
+    def form_valid(self, form):
+        email = form.cleaned_data['email']
+        password = form.cleaned_data['password']
+        user = authenticate(self.request, email=email, password=password)
+        if user and user.is_admin:
+            login(self.request, user)
+            return redirect(self.get_success_url())
+        else:
+            return render(self.request, self.template_name, {
+                'form': form,
+                'error': 'Invalid admin credentials',
+            })

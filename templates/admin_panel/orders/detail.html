@@ -1,0 +1,36 @@
+{% extends 'admin_panel/base.html' %}
+{% block content %}
+<h3>Order #{{ order.id }}</h3>
+<p><strong>Customer:</strong> {{ order.user.name }} ({{ order.user.email }})</p>
+<p><strong>Status:</strong> {{ order.status }}</p>
+<p><strong>Placed At:</strong> {{ order.created_at|date:"Y-m-d H:i" }}</p>
+{% if order.address %}
+<p>
+  <strong>Address:</strong>
+  {{ order.address.street }}, {{ order.address.city }}, {{ order.address.state }}, {{ order.address.pin_code }}, {{ order.address.country }}
+</p>
+{% endif %}
+
+<h4>Items</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Qty</th>
+            <th>Unit Price</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in order.items.all %}
+        <tr>
+            <td>{{ item.product.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>₹{{ item.price }}</td>
+            <td>₹{{ item.price|floatformat:2|add:item.quantity|floatformat:2 }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'admin_panel:order_list' %}" class="btn btn-secondary">Back to Orders</a>
+{% endblock %}

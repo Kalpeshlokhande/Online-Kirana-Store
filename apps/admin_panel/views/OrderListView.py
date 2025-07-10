@@ -1,15 +1,11 @@
-from django.shortcuts import redirect, render
-from django.views import View
+from apps.admin_panel.views.AdminRequiredMixin import AdminRequiredMixin
 from apps.orders.models.order import Order
+from django.views.generic import ListView
 
-class OrderListView(View):
+class OrderListView(AdminRequiredMixin, ListView):
+    model = Order
     template_name = 'admin_panel/orders/list.html'
-
-    def get(self, request):
-        if not (request.user.is_authenticated and request.user.is_admin):
-            return redirect('admin_login')
-        
-        orders = Order.objects.all().order_by('-created_at')
-        return render(request, self.template_name, {'orders': orders})
+    context_object_name = 'orders'
+    queryset = Order.objects.select_related('user', 'address').order_by('-created_at')
     
 

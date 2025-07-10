@@ -1,15 +1,9 @@
-from django.shortcuts import redirect, render
-from django.views import View
+from apps.admin_panel.views.AdminRequiredMixin import AdminRequiredMixin
 from apps.products.models.product import Product
+from django.views.generic import ListView
 
-class ProductListView(View):
+class ProductListView(AdminRequiredMixin, ListView):
     template_name = 'admin_panel/products/list.html'
-
-    def get(self, request):
-        if not (request.user.is_authenticated and request.user.is_admin):
-            return redirect('admin_login')
-        
-        products = Product.objects.all()
-        return render(request, self.template_name, {'products': products})
-    
+    model = Product
+    context_object_name = 'products'
     
