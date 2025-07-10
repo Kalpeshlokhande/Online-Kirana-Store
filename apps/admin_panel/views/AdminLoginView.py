@@ -1,9 +1,8 @@
-from django.shortcuts import render, redirect
-from django.views import View
 from django.contrib import messages
-from rest_framework_simplejwt.tokens import RefreshToken
-from apps.users.models import User
+from django.shortcuts import redirect,render
+from django.views import View
 from django.contrib.auth import authenticate, login
+from rest_framework_simplejwt.tokens import RefreshToken
 
 class AdminLoginView(View):
     template_name = 'admin_panel/login.html'
@@ -26,18 +25,3 @@ class AdminLoginView(View):
         
         messages.error(request, 'Invalid credentials or not an admin')
         return render(request, self.template_name)
-
-class AdminLogoutView(View):
-    def get(self, request):
-        request.session.flush()
-        return redirect('admin_login')
-
-class AdminDashboardView(View):
-    template_name = 'admin_panel/dashboard.html'
-
-    def get(self, request):
-        if not (request.user.is_authenticated and request.user.is_admin):
-            return redirect('admin_login')
-        return render(request, self.template_name)
-    
-    
